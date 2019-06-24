@@ -1,0 +1,2 @@
+export const USER_CONNECTED = 'USER_CONNECTED';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
