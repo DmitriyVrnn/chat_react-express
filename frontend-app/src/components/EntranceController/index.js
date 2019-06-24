@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client'
 import {CONNECTION_PORT, LOGOUT_USER, USER_CONNECTED} from "../../constants";
 
 import LoginForm from '../LoginForm'
+import Chat from '../Chat'
 
 class EntranceController extends Component {
   state = {
@@ -42,13 +43,13 @@ class EntranceController extends Component {
 
   render() {
     const {socket, user} = this.state;
-    console.log(user);
+    console.log(user.login);
     return (
         <section>
           {!user ?
               <LoginForm socket={socket}
                          setUser={this.setUser}/>
-              : <h1>hello</h1>
+              : <Chat user={user}/>
           }
         </section>
     )

@@ -9,7 +9,7 @@ export default class LoginForm extends Component {
   setUser = (user, isUser) => {
     console.log(user, isUser);
     const {setUser} = this.props;
-    if(isUser){
+    if (isUser) {
       console.log(`err ${isUser}`)
     } else {
       setUser(user);
@@ -21,10 +21,12 @@ export default class LoginForm extends Component {
   };
 
   handleSubmit = (e) => {
-    const { socket } = this.props;
+    const {socket} = this.props;
     const {login} = this.state;
     e.preventDefault();
-    socket.emit(AUTH_USER, login, this.setUser);
+    if (login.trim()) {
+      socket.emit(AUTH_USER, login, this.setUser);
+    }
   };
 
   render() {
@@ -34,10 +36,10 @@ export default class LoginForm extends Component {
           <form onSubmit={this.handleSubmit}>
             <label> Input your nickname
               <input
-                    type="text"
-                     value={login}
-                     onChange={this.handleInputChange}
-                     required/>
+                  type="text"
+                  value={login}
+                  onChange={this.handleInputChange}
+                  required/>
             </label>
           </form>
         </>
