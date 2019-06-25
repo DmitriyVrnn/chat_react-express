@@ -11,11 +11,7 @@ class EntranceController extends Component {
     user: '',
   };
 
-  componentWillMount() {
-    this.connectionSocket()
-  };
-
-  connectionSocket = () => {
+  componentDidMount() {
     const {socket} = this.state;
     // think
     if (!socket) {
@@ -35,21 +31,22 @@ class EntranceController extends Component {
   };
 
   //action
-  logoutChat = () => {
+  logout = () => {
     const {socket} = this.state;
     socket.emit(LOGOUT_USER);
     this.setState({user: ''})
-  };
+  }
 
   render() {
     const {socket, user} = this.state;
-    console.log(user.login);
     return (
         <section>
-          {!user ?
-              <LoginForm socket={socket}
-                         setUser={this.setUser}/>
-              : <Chat user={user}/>
+          {user ?
+              <Chat user={user}
+                    logout={this.logout}
+                    socket={socket}/>
+              : <LoginForm socket={socket}
+                           setUser={this.setUser}/>
           }
         </section>
     )

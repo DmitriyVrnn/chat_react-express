@@ -1,43 +1,43 @@
 import React, {Component} from 'react';
-import {AUTH_USER} from "../../constants";
+import {LOGIN} from "../../constants";
 
 export default class LoginForm extends Component {
   state = {
-    login: '',
+    userName: '',
   };
 
-  setUser = (user, isUser) => {
-    console.log(user, isUser);
+  setUser = ({userName, isUser}) => {
+    console.log(userName, isUser);
     const {setUser} = this.props;
     if (isUser) {
       console.log(`err ${isUser}`)
     } else {
-      setUser(user);
+      setUser(userName);
     }
   };
 
   handleInputChange = (e) => {
-    this.setState({login: e.target.value})
+    this.setState({userName: e.target.value})
   };
 
   handleSubmit = (e) => {
     const {socket} = this.props;
-    const {login} = this.state;
+    const {userName} = this.state;
     e.preventDefault();
-    if (login.trim()) {
-      socket.emit(AUTH_USER, login, this.setUser);
+    if (userName.trim()) {
+      socket.emit(LOGIN, userName, this.setUser);
     }
   };
 
   render() {
-    const {login} = this.state;
+    const {userName} = this.state;
     return (
         <>
           <form onSubmit={this.handleSubmit}>
             <label> Input your nickname
               <input
                   type="text"
-                  value={login}
+                  value={userName}
                   onChange={this.handleInputChange}
                   required/>
             </label>
