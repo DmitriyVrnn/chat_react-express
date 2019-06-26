@@ -2,39 +2,83 @@
 const io = require('./server.js').io
 const uuid = require('uuid');
 
-const Login = require('./chat/Login');
+//const {LoginUser} = require('./chat/Login')
 
-const USER_CONNECTED = 'USER_CONNECTED';
-const USER_DISCONNECT = 'USER_DISCONNECT';
-const LOGIN = 'LOGIN';
-const SEND_MESSAGE = 'SEND_MESSAGE';
-const LOGOUT_USER = 'LOGOUT_USER ';
+const {LOGIN, USER_CONNECTED, USER_DISCONNECT, LOGOUT_USER, COMMUNITY_CHAT, MESSAGE_SEND, MESSAGE_RECIEVED} = require('./contants');
 
 let connectedUsers = {};
 
-module.exports = (socket) => {
-  console.log(`Socket id: ${socket.id}`);
-  socket.on(LOGIN, Login(connectedUsers));
+const createChat = ({messages = [], name = "Community", users = []} = {})=>(
+    {
+      id:uuid(),
+      name,
+      messages,
+      users,
+    }
+);
 
-  socket.on(USER_CONNECTED, (user)=>{
-    user.socketId = socket.id
+let communityChat = createChat()
+
+
+module.exports = (socket) => {
+  //socket.on(LOGIN, LoginUser(connectedUsers));
+
+  let sendMessageToChatFromUser;
+
+  //Вход
+  socket.on(LOGIN, (nickname, callback) => {
+    if (isUser(connectedUsers, nickname)) {
+      callback({isUser: true, user: null})
+    } else {
+      callback({isUser: false, user: createUser({name: nickname})})
+    }
+  })
+
+  //Добавить пользователя при коннекте в объект
+  socket.on(USER_CONNECTED, (user) => {
     connectedUsers = addUser(connectedUsers, user)
     socket.user = user
-    //console.log(JSON.stringify(user))
-    //console.log(JSON.stringify(user))
-
-    /*sendMessageToChatFromUser = sendMessageToChat(user.name)
-    sendTypingFromUser = sendTypingToChat(user.name)*/
-
+    sendMessageToChatFromUser = sendMessageToChat(user.name)
     io.emit(USER_CONNECTED, connectedUsers);
   });
 
+  //Выход
   socket.on(LOGOUT_USER, () => {
-    connectedUsers = removeUser(connectedUsers, socket.name)
-    //think
-    io.emit(LOGOUT_USER, connectedUsers);
-    console.log(connectedUsers)
+     if('user' in socket){
+       connectedUsers = removeUser(connectedUsers, socket.user.name)
+       io.emit(USER_DISCONNECT, connectedUsers)
+     }
   })
+
+  //Общая комната
+  socket.on(COMMUNITY_CHAT, (callback) => {
+    callback(communityChat)
+  })
+
+  socket.on(MESSAGE_SEND, ({chatId, message}) => {
+    console.log(MESSAGE_SEND)
+    sendMessageToChatFromUser(chatId, message)
+  })
+
+};
+
+const isUser = (userList, username) => {
+  return username in userList;
+};
+
+//Отправка сообщений
+const sendMessageToChat = (sender) => {
+  console.log(MESSAGE_SEND)
+  return (chatId, message) => {
+    io.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({message, sender}))
+  }
+}
+
+const createUser = ({name = ""}) => {
+  return {
+    id: uuid(),
+    name,
+  };
 };
 
 const addUser = (userList, user) => {
@@ -43,9 +87,9 @@ const addUser = (userList, user) => {
   return newList
 };
 
-const removeUser = (userList, userName) => {
+const removeUser = (userList, username) => {
   let newList = Object.assign({}, userList);
-  delete newList[userName];
+  delete newList[username];
   return newList
 };
 

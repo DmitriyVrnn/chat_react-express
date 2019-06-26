@@ -1,31 +1,28 @@
 import React, {Component} from 'react'
 import socketIOClient from 'socket.io-client'
-import {CONNECTION_PORT, LOGOUT_USER, USER_CONNECTED} from "../../constants";
 
 import LoginForm from '../LoginForm'
 import ChatForm from '../ChatForm'
+import {USER_CONNECTED, CONNECTION_PORT, LOGOUT_USER} from '../../constants/';
 
 class EntranceController extends Component {
   state = {
     socket: null,
-    user: '',
+    user: null,
   };
 
-  componentDidMount() {
-    const {socket} = this.state;
-    // think
-    if (!socket) {
-      const socket = socketIOClient(CONNECTION_PORT);
-      socket.on('connect', () => {
-        console.log(`connected ${socket.id}`)
-      });
-      this.setState({socket})
+  componentWillMount() {
+    const socket = socketIOClient(CONNECTION_PORT);
+    if (this.state.user) {
+      this.reconnect(socket)
+    } else {
+      console.log("connected")
     }
+    this.setState({socket})
   };
 
   //action
   setUser = (user) => {
-    console.log(user)
     const {socket} = this.state;
     socket.emit(USER_CONNECTED, user);
     this.setState({user});
@@ -35,8 +32,8 @@ class EntranceController extends Component {
   logout = () => {
     const {socket} = this.state;
     socket.emit(LOGOUT_USER);
-    this.setState({user: ''})
-  }
+    this.setState({user: null})
+  };
 
   render() {
     const {socket, user} = this.state;
@@ -44,8 +41,8 @@ class EntranceController extends Component {
         <section>
           {user ?
               <ChatForm user={user}
-                    logout={this.logout}
-                    socket={socket}/>
+                        logout={this.logout}
+                        socket={socket}/>
               : <LoginForm socket={socket}
                            setUser={this.setUser}/>
           }

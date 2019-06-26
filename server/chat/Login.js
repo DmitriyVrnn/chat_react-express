@@ -1,31 +1,29 @@
 const uuid = require('uuid');
 
-module.exports = (connectedUsers) => {
-  return (userName, setUser) => {
-    if (isUser(connectedUsers, userName)) {
-      console.log(`LOGIN ${Object.keys(connectedUsers)}`);
+exports.LoginUser = (connectedUsers) => {
+  return (user, setUser) => {
+    if (isUser(connectedUsers, user)) {
       setUser({
         isUser: true,
-        userName: ''
+        user: ''
       });
     } else {
       setUser({
         isUser: false,
-        userName: createLogin({name: userName})
+        user: createLogin({name: user})
       });
     }
   }
 };
 
-const isUser = (userList, userName) => {
-  console.log(`userList - ${userName}`);
-  return userName in userList;
+const isUser = (userList, user) => {
+  return user in userList;
 };
 
-const createLogin = ({name = ""}) => {
-  console.log(`name - ${name}`);
+const createLogin = ({name = "", socketId=null}) => {
   return {
     id: uuid(),
     name,
+    socketId,
   };
 };
