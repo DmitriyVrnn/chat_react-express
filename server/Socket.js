@@ -1,12 +1,11 @@
 //think
-const app = require('express')();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('./server.js').io
 const uuid = require('uuid');
 
 const Login = require('./chat/Login');
 
 const USER_CONNECTED = 'USER_CONNECTED';
+const USER_DISCONNECT = 'USER_DISCONNECT';
 const LOGIN = 'LOGIN';
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const LOGOUT_USER = 'LOGOUT_USER ';
@@ -17,21 +16,24 @@ module.exports = (socket) => {
   console.log(`Socket id: ${socket.id}`);
   socket.on(LOGIN, Login(connectedUsers));
 
-  socket.on(USER_CONNECTED, (user) => {
-    connectedUsers = addUser(connectedUsers, user);
-    io.emit(USER_CONNECTED, connectedUsers);
-    console.log(connectedUsers)
+  socket.on(USER_CONNECTED, (user)=>{
+    user.socketId = socket.id
+    connectedUsers = addUser(connectedUsers, user)
+    socket.user = user
+    //console.log(JSON.stringify(user))
+    //console.log(JSON.stringify(user))
 
     /*sendMessageToChatFromUser = sendMessageToChat(user.name)
     sendTypingFromUser = sendTypingToChat(user.name)*/
 
+    io.emit(USER_CONNECTED, connectedUsers);
   });
 
   socket.on(LOGOUT_USER, () => {
-    let userList = removeUser(connectedUsers, socket.name)
+    connectedUsers = removeUser(connectedUsers, socket.name)
     //think
-    io.emit(LOGOUT_USER, Object.values(userList));
-    console.log(`remove ${Object.values(userList)}`)
+    io.emit(LOGOUT_USER, connectedUsers);
+    console.log(connectedUsers)
   })
 };
 
