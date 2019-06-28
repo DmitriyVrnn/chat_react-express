@@ -1,0 +1,8 @@
+.user-list-container{
+    margin-left: 20px;
+    width: 10%;
+}
+
+.user-list-item{
+    list-style-type: none;
+}

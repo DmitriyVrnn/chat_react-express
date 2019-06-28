@@ -3,11 +3,13 @@ import React from 'react'
 export default class Messages extends React.Component {
   render() {
     const {messages, user} = this.props
+    console.log('Messages', messages)
     return (
         <div className="thread-container">
           <div className="thread">
             {
               messages.map((mes) => {
+                console.log("MES", mes)
                 return (
                     <div
                         key={mes.id}

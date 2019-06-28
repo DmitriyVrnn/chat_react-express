@@ -8,17 +8,17 @@ const {LOGIN, USER_CONNECTED, USER_DISCONNECT, LOGOUT_USER, COMMUNITY_CHAT, MESS
 
 let connectedUsers = {};
 
-const createChat = ({messages = [], name = "Community", users = []} = {})=>(
+const createChat = ({messages = [], name = "", users = []} = {}) => (
     {
-      id:uuid(),
+      id: uuid(),
       name,
       messages,
       users,
     }
 );
 
-let communityChat = createChat()
-
+let communityChat = {firstChat: createChat({messages: [], name: "Test", users: []}), secondChat: createChat({messages: [], name: "Test2", users: []})};
+//console.log('CHAT', communityChat)
 
 module.exports = (socket) => {
   //socket.on(LOGIN, LoginUser(connectedUsers));
@@ -42,21 +42,29 @@ module.exports = (socket) => {
     io.emit(USER_CONNECTED, connectedUsers);
   });
 
+  //Выход из аккаунта после перезагрузки страницы
+  socket.on('disconnect', () => {
+    if ('user' in socket) {
+      connectedUsers = removeUser(connectedUsers, socket.user.name)
+      io.emit(USER_DISCONNECT, connectedUsers)
+    }
+  })
+
   //Выход
   socket.on(LOGOUT_USER, () => {
-     if('user' in socket){
-       connectedUsers = removeUser(connectedUsers, socket.user.name)
-       io.emit(USER_DISCONNECT, connectedUsers)
-     }
+    if ('user' in socket) {
+      connectedUsers = removeUser(connectedUsers, socket.user.name)
+      io.emit(USER_DISCONNECT, connectedUsers)
+    }
   })
 
   //Общая комната
   socket.on(COMMUNITY_CHAT, (callback) => {
+    console.log(communityChat)
     callback(communityChat)
-  })
+  });
 
   socket.on(MESSAGE_SEND, ({chatId, message}) => {
-    console.log(MESSAGE_SEND)
     sendMessageToChatFromUser(chatId, message)
   })
 
@@ -68,11 +76,10 @@ const isUser = (userList, username) => {
 
 //Отправка сообщений
 const sendMessageToChat = (sender) => {
-  console.log(MESSAGE_SEND)
   return (chatId, message) => {
     io.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({message, sender}))
   }
-}
+};
 
 const createUser = ({name = ""}) => {
   return {

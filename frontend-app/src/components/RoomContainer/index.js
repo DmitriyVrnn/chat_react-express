@@ -1,86 +1,72 @@
-import React, { Component } from 'react';
-import SideBarOption from '../SideBarOption'
-import { last, get, differenceBy } from 'lodash'
+import React, {Component} from 'react';
+import RoomList from '../RoomList'
+
+import {last, get, differenceBy} from 'lodash'
 import './styles.css'
 
-export default class SideBar extends Component{
-  static type = {
-    USERS:"users",
-    CHATS:"chats"
-  }
-  constructor(props){
-    super(props)
-    this.state = {
-      reciever:"",
-      activeSideBar: SideBar.type.CHATS
-    }
-  }
-  handleSubmit = (e) => {
-    e.preventDefault()
-    const { reciever } = this.state
-    const { onSendPrivateMessage } = this.props
+export default class RoomContainer extends Component {
 
-    onSendPrivateMessage(reciever)
-    this.setState({reciever:""})
+  createArrayFromObject(object) {
+    return object == null ? [] : this.values(object, Object.keys(object))
   }
 
-  addChatForUser = (reciever) => {
-    this.props.onSendPrivateMessage(reciever)
-    this.setActiveSideBar(SideBar.type.CHATS)
-  }
-  setActiveSideBar = (type) => {
-    this.setState({ activeSideBar:type })
+  values(object, keys) {
+    return keys == null ? [] : keys.map((key) => object[key])
   }
 
-  render(){
-    const { chats, activeChat, user, setActiveChat, logout, users } = this.props
-    const {activeSideBar } = this.state
+  render() {
+    const {chats, activeChats, user, setActiveChat, logout} = this.props
+    console.log('room', chats)
     return (
-        <div className="room-container">
-          <div className="side-bar-select">
-            <div
-                onClick = { ()=>{ this.setActiveSideBar(SideBar.type.CHATS) } }
-                className={`side-bar-select__option ${ activeSideBar === SideBar.type.CHATS ? 'active':''}`}>
-              <span>Chats</span>
-            </div>
-            <div
-                onClick = { ()=>{ this.setActiveSideBar(SideBar.type.USERS) } }
-                className={`side-bar-select__option ${ activeSideBar === SideBar.type.USERS ? 'active':''}`}>
-              <span>Users</span>
-            </div>
-          </div>
+        <div className="container-room">
           <div
               className="users"
               ref='users'
-              onClick={(e)=>{ (e.target === this.refs.user) && setActiveChat(null) }}>
+              onClick={(e) => {
+                (e.target === this.refs.user) && activeChats(null)
+              }}>
 
             {
-              activeSideBar === SideBar.type.CHATS ?
-                  chats.map((chat)=>{
+              chats.map((chat) => {
+                let newChat = this.createArrayFromObject(chat)
+                //console.log('ЕЩЕ РАЗ', newChat.map(item => item.name))
+                return (
+                    <RoomList key={this.createArrayFromObject(chat.id)}
+                              name={newChat.map(item => item.name)}
+                              active={this.createArrayFromObject(activeChats.id) === this.createArrayFromObject(chat.id)}
+                              setActiveChat={() => setActiveChat(chat)}/>
+                )
+                /*if (chat.name) {
+                  const user = chat.users.find(({name}) => {
+                    return name !== this.props.name
+                  }) || {name: ["General", "Man"]}*/
 
-                    return(
-                        <SideBarOption
-                            key = {chat.id}
-                            lastMessage = { get(last(chat.messages), 'message', '') }
-                            active = { chat.id }
-                            onClick = { ()=>{ setActiveChat(chat) } }
-                        />
-                    )
-                  })
+                /*return (
+                    <div
+                        key={chat.id}
+                        onClick={() => {
+                          setActiveChat(chat)
+                        }}
+                    >
+                      <div className="user-info">
+                        {console.log('user', user)}
+                        <ul className="name">{user.name.map(item => <li>{item}</li>)}</ul>
+                      </div>
 
-                  :
-                  differenceBy(users, [user], 'name').map((user)=>{
-                    return <SideBarOption
-                        key = { user.id }
-                        name = { user.name }
-                        onClick = { ()=>{ this.addChatForUser(user.name) }  }
-                    />
-                  })
+                    </div>
+                )
+              }
+              return null*/
+              })
             }
+
           </div>
           <div className="current-user">
             <span>{user.name}</span>
-            <div onClick={()=>{logout()}}>Выход
+            <div onClick={() => {
+              logout()
+            }} title="Logout" className="logout">
+              Выйти
             </div>
           </div>
         </div>

@@ -1,12 +1,15 @@
 .container {
     display: flex;
-    width: 90%;
+    width: 100em;
     margin: 50px auto;
     border: 1px solid black;
     height: 100vh;
 }
 
 .message-container{
-    width: 50%;
+    width: 70%;
     border-right: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+
 import RoomContainer from '../RoomContainer'
-import MessageContainer from '../MessageContainer'
 import UserList from '../UserList'
 import ChatHeading from '../ChatHeading'
 import Messages from '../Messages'
@@ -32,29 +32,33 @@ export default class ChatForm extends Component {
     const {socket} = this.props;
     socket.off(USER_CONNECTED);
     socket.off(USER_DISCONNECT);
+    socket.off(COMMUNITY_CHAT);
   }
 
   resetChat = (chat) => {
+    console.log('res', chat)
     return this.addChat(chat, true)
   };
 
   addChat(chat, reset) {
-    console.log(chat)
-    const { socket } = this.props
-    const { chats } = this.state
+    const {socket} = this.props
+    const {chats, activeChat} = this.state
 
     const newChats = reset ? [chat] : [...chats, chat]
-    this.setState({chats:newChats, activeChat:reset ? chat : this.state.activeChat})
+    this.setState({
+      chats: newChats,
+      activeChat: reset ? chat : activeChat
+    });
 
     const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`
     socket.on(messageEvent, this.addMessageToChat(chat.id))
   }
 
   addMessageToChat = (chatId) => {
-    return message => {
+    return (message) => {
       const {chats} = this.state
       let newChats = chats.map((chat) => {
-        if (chat.id === chatId)
+        if (this.createArrayFromObject(chat.id) === chatId)
           chat.messages.push(message)
         return chat
       })
@@ -79,7 +83,10 @@ export default class ChatForm extends Component {
     socket.on(USER_DISCONNECT, (users) => {
       console.log('DISCONNECT', (users))
     });
+
     socket.emit(COMMUNITY_CHAT, this.resetChat)
+
+    //socket.emit(COMMUNITY_CHAT, this.resetChat)
   }
 
   createArrayFromObject(object) {
@@ -93,32 +100,34 @@ export default class ChatForm extends Component {
   render() {
     const {user, logout} = this.props;
     const {users, chats, activeChat} = this.state
+    //let chatik = this.createArrayFromObject(activeChat)
+    console.log('activeChat', activeChat)
     return (
-        <section className="container">
-          <RoomContainer user={user}
-                         logout={logout}
-                         chats={chats}
-                         activeChats={activeChat}
-                         setActiveChats={this.setActiveChats}/>
+        <div className="container">
           {
+            <RoomContainer user={user}
+                           logout={logout}
+                           chats={chats}
+                           activeChats={activeChat}
+                           setActiveChat={this.setActiveChats}/>}
+          {/*
             activeChat !== null ? (
                     <div className="message-container">
+                      {console.log("Активный чат", activeChat)}
                       <ChatHeading name={activeChat.name}/>
                       <Messages messages={activeChat.messages}
                                 user={user}/>
                       <MessageInput sendMessage={(message) => {
                         this.sendMessage(activeChat.id, message)
-                        console.log(message)
                       }}/>
                     </div>
                 ) :
                 <div>
-                  {console.log('активный', activeChat)}
                   <h3>Choose a chat!</h3>
                 </div>
-          }
+          */}
           <UserList users={users}/>
-        </section>
+        </div>
     )
   }
 }

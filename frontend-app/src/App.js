@@ -4,9 +4,7 @@ import EntranceController from './components/EntranceController'
 
 const App = () => {
   return (
-      <div>
-        <EntranceController/>
-      </div>
+      <EntranceController/>
   );
 };
 
