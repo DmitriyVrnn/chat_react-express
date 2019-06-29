@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import RoomList from '../RoomList'
+import Room from '../Room'
 
 import {last, get, differenceBy} from 'lodash'
 import './styles.css'
@@ -16,7 +16,7 @@ export default class RoomContainer extends Component {
 
   render() {
     const {chats, activeChats, user, setActiveChat, logout} = this.props
-    console.log('room', chats)
+    console.log('ЧАТЫ', chats)
     return (
         <div className="container-room">
           <div
@@ -28,38 +28,27 @@ export default class RoomContainer extends Component {
 
             {
               chats.map((chat) => {
-                let newChat = this.createArrayFromObject(chat)
-                //console.log('ЕЩЕ РАЗ', newChat.map(item => item.name))
-                return (
-                    <RoomList key={this.createArrayFromObject(chat.id)}
-                              name={newChat.map(item => item.name)}
-                              active={this.createArrayFromObject(activeChats.id) === this.createArrayFromObject(chat.id)}
-                              setActiveChat={() => setActiveChat(chat)}/>
-                )
-                /*if (chat.name) {
-                  const user = chat.users.find(({name}) => {
-                    return name !== this.props.name
-                  }) || {name: ["General", "Man"]}*/
-
-                /*return (
-                    <div
-                        key={chat.id}
-                        onClick={() => {
-                          setActiveChat(chat)
-                        }}
-                    >
-                      <div className="user-info">
-                        {console.log('user', user)}
-                        <ul className="name">{user.name.map(item => <li>{item}</li>)}</ul>
-                      </div>
-
-                    </div>
-                )
-              }
-              return null*/
+                console.log('Что в чате', Object.values(chat))
+                //let newChat = this.createArrayFromObject(chat)
+                // return chat.map(item => {
+                //
+                if (activeChats) {
+                  // console.log('Сраневние', activeChats, chat.id)
+                  return Object.values(chat).map(item => {
+                    console.log('active ID', activeChats.id)
+                    return (
+                        <Room key={item.id}
+                              name={item.name}
+                              active={activeChats.id === item.id}
+                              setActiveChat={() => setActiveChat(item)}
+                        />
+                    )
+                  })
+                } else {
+                  return (<h1>Ну чет так се</h1>)
+                }
               })
             }
-
           </div>
           <div className="current-user">
             <span>{user.name}</span>
@@ -74,3 +63,4 @@ export default class RoomContainer extends Component {
 
   }
 }
+

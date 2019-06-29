@@ -17,7 +17,7 @@ const createChat = ({messages = [], name = "", users = []} = {}) => (
     }
 );
 
-let communityChat = {firstChat: createChat({messages: [], name: "Test", users: []}), secondChat: createChat({messages: [], name: "Test2", users: []})};
+let communityChat = [createChat({name: "Test"}), createChat({name: "Test2"}), createChat({name: "Test3"})];
 //console.log('CHAT', communityChat)
 
 module.exports = (socket) => {
@@ -60,7 +60,6 @@ module.exports = (socket) => {
 
   //Общая комната
   socket.on(COMMUNITY_CHAT, (callback) => {
-    console.log(communityChat)
     callback(communityChat)
   });
 
@@ -77,6 +76,7 @@ const isUser = (userList, username) => {
 //Отправка сообщений
 const sendMessageToChat = (sender) => {
   return (chatId, message) => {
+    console.log(sender, chatId, message)
     io.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({message, sender}))
   }
 };
