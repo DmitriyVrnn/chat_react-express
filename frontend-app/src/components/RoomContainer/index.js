@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import Room from '../Room'
+import Room from '../Room';
 
-import {last, get, differenceBy} from 'lodash'
 import './styles.css'
 
 export default class RoomContainer extends Component {

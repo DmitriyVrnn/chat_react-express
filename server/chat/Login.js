@@ -1,6 +1,6 @@
-const uuid = require('uuid');
+const User = require('../models/User');
 
-exports.LoginUser = (connectedUsers) => {
+signIn = (connectedUsers) => {
   return (user, setUser) => {
     if (isUser(connectedUsers, user)) {
       setUser({
@@ -10,7 +10,7 @@ exports.LoginUser = (connectedUsers) => {
     } else {
       setUser({
         isUser: false,
-        user: createLogin({name: user})
+        user: User.createUser({name: user})
       });
     }
   }
@@ -20,10 +20,6 @@ const isUser = (userList, user) => {
   return user in userList;
 };
 
-const createLogin = ({name = "", socketId=null}) => {
-  return {
-    id: uuid(),
-    name,
-    socketId,
-  };
+module.exports = {
+  signIn,
 };
