@@ -17,7 +17,7 @@ let onlineUsers = {};
 const defaultRoom = [Room.createChat({ name: 'General' }),
   Room.createChat({ name: 'Games' }),
   Room.createChat({ name: 'Movies' }),
-  Room.createChat({ name: 'Разговорчики' })].reverse();
+  Room.createChat({ name: 'Обсуждения' })].reverse();
 
 module.exports = (socket) => {
   let sendMessageToChatFromUser;

@@ -27,7 +27,7 @@ export default class ChatForm extends Component {
 
   componentDidMount() {
     const { socket } = this.props;
-    this.initSocket(socket);
+    this.initializeSocket(socket);
   }
 
   componentWillUnmount() {
@@ -57,7 +57,9 @@ export default class ChatForm extends Component {
   addMessageToChat = chatId => (message) => {
     const { chats } = this.state;
     const newChats = chats.map(chat => Object.values(chat).map((chat) => {
-      if (chat.id === chatId) chat.messages.push(message);
+      if (chat.id === chatId) {
+        chat.messages.push(message);
+      }
       return chat;
     }));
     this.setState({ chats: newChats });
@@ -72,18 +74,15 @@ export default class ChatForm extends Component {
     socket.emit(MESSAGE_SEND, { chatId, message });
   };
 
-  initSocket = (socket) => {
+  initializeSocket = (socket) => {
     socket.on(USER_CONNECTED, (users) => {
       const listUsers = createArrayFromObject(users);
       this.setState({ users: listUsers });
     });
     socket.on(USER_DISCONNECT, (users) => {
-      console.log('DISCONNECT', (users));
+      this.setState({ users: createArrayFromObject(users) });
     });
-
     socket.emit(CREATE_CHATS, this.resetChat);
-
-    //socket.emit(COMMUNITY_CHAT, this.resetChat)
   };
 
   render() {
