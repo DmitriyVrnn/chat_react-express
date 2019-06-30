@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 
+import './styles.css';
+
 import LoginForm from '../LoginForm';
 import ChatForm from '../ChatForm';
 import { USER_CONNECTED, CONNECTION_PORT, LOGOUT_USER } from '../../constants';
@@ -37,7 +39,7 @@ class EntranceController extends Component {
   render() {
     const { socket, user } = this.state;
     return (
-      <section>
+      <section className="container-login">
         {user
           ? (
             <ChatForm

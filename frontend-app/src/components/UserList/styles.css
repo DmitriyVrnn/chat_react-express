@@ -1,8 +1,21 @@
-.user-list-container{
-    margin-left: 20px;
+.online-container{
+    padding-left: 20px;
     width: 10%;
+    z-index: 1;
+    box-shadow: -4px 1px 5px -4px rgba(0,0,0,0.75);
 }
 
 .user-list-item{
     list-style-type: none;
+    position: relative;
+}
+
+.user-list-item .circle{
+    position: relative;
+    right: 19px;
+    top: 17px;
+    width: 10px;
+    height: 10px;
+    background-color: #1b5e20;
+    border-radius: 50%;
 }

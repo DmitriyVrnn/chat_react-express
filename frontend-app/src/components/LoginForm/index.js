@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './styles.css';
+
+import TextField from '@material-ui/core/TextField';
+
 import { LOGIN } from '../../constants';
 
 export default class LoginForm extends Component {
@@ -34,10 +38,12 @@ export default class LoginForm extends Component {
     const { user } = this.state;
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form className="login-form" onSubmit={this.handleSubmit}>
           <label>
-              Введите свой логин
-            <input
+            <p className="login-title">Логин</p>
+            <TextField
+              className="login-field"
+              placeholder="Введите логин"
               type="text"
               value={user}
               onChange={this.handleInputChange}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 
 import Room from '../Room';
 
@@ -8,46 +9,44 @@ import './styles.css';
 const RoomContainer = ({
   chats, activeChats, user, setActiveChat, logout,
 }) => (
-  <div className="container-room">
-    <div
-      className="users"
-      onClick={(e) => {
-        (e.target === user) && activeChats(null);
-      }}
-    >
-
+  <div className="room-container">
+    <ul className="list-rooms">
       {
-            chats.map((chat) => {
-              if (activeChats) {
-                return Object.values(chat).map((item) => {
-                  console.log('active ID', activeChats.id);
-                  return (
-                    <Room
-                      key={item.id}
-                      id={item.id}
-                      name={item.name}
-                      active={activeChats.id === item.id}
-                      setActiveChat={() => setActiveChat(item)}
-                    />
-                  );
-                });
-              }
-              return (<h1>Активные комнаты отсутствуют</h1>);
-            })
-          }
-    </div>
+          chats.map((chat) => {
+            if (activeChats) {
+              return Object.values(chat).map(item => (
+                <li
+                  className="items"
+                  key={item.id}
+                >
+                  <Room
+                    activeChats={activeChats}
+                    id={item.id}
+                    name={item.name}
+                    active={activeChats.id === item.id}
+                    setActiveChat={() => setActiveChat(item)}
+                  />
+                </li>
+              ));
+            }
+            return (<h1>Активные комнаты отсутствуют</h1>);
+          })
+        }
+    </ul>
     <div className="current-user">
-      <span>{user.name}</span>
-      <button
+      <span className="block-info user-name-info">{user.name}</span>
+      <Button
+        variant="outlined"
+        color="inherit"
         type="button"
         onClick={() => {
           logout();
         }}
         title="Logout"
-        className="logout"
+        className="block-info btn-logout"
       >
-            Выйти
-      </button>
+        Выход
+      </Button>
     </div>
   </div>
 );

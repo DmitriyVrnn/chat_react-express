@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-} from 'react-router-dom';
 
 import RoomContainer from '../RoomContainer';
 import UserList from '../UserList';
@@ -96,38 +90,36 @@ export default class ChatForm extends Component {
     const { user, logout } = this.props;
     const { users, chats, activeChat } = this.state;
     return (
-      <Router>
-        <div className="container">
-          <RoomContainer
-            user={user}
-            logout={logout}
-            chats={chats}
-            activeChats={activeChat}
-            setActiveChat={this.setActiveChats}
-          />
-          {
-              activeChat !== null ? (
-                <div className="message-container">
-                  <ChatHeading name={activeChat.name} />
-                  <Messages
-                    messages={activeChat.messages}
-                    user={user}
-                  />
-                  <MessageInput sendMessage={(message) => {
-                    this.sendMessage(activeChat.id, message);
-                  }}
-                  />
+      <div className="chat-container">
+        <RoomContainer
+          user={user}
+          logout={logout}
+          chats={chats}
+          activeChats={activeChat}
+          setActiveChat={this.setActiveChats}
+        />
+        {
+            activeChat !== null ? (
+              <div className="message-container">
+                <ChatHeading name={activeChat.name} />
+                <Messages
+                  messages={activeChat.messages}
+                  user={user}
+                />
+                <MessageInput sendMessage={(message) => {
+                  this.sendMessage(activeChat.id, message);
+                }}
+                />
+              </div>
+            )
+              : (
+                <div>
+                  <h3>Войдите в чат</h3>
                 </div>
               )
-                : (
-                  <div>
-                    <h3>Choose a chat!</h3>
-                  </div>
-                )
-            }
-          <UserList users={users} />
-        </div>
-      </Router>
+          }
+        <UserList users={users} />
+      </div>
     );
   }
 }

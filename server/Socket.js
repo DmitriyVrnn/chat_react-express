@@ -1,4 +1,4 @@
-const io = require('./server.js').io;
+const { io } = require('./server.js');
 
 const Room = require('./models/Room');
 
@@ -8,15 +8,16 @@ const { sendMessageToChat } = require('./chat/MessageManager');
 // События для socket
 const {
   LOGIN, USER_CONNECTED, USER_DISCONNECT, LOGOUT_USER,
-  CREATE_CHATS, MESSAGE_SEND, MESSAGE_RECIEVED
+  CREATE_CHATS, MESSAGE_SEND, MESSAGE_RECIEVED,
 } = require('./events');
 
 let onlineUsers = {};
 
 // Комнаты по умолчанию
-let defaultRoom = [Room.createChat({name: "General"}),
-                   Room.createChat({name: "Games"}),
-                   Room.createChat({name: "Movies"})];
+const defaultRoom = [Room.createChat({ name: 'General' }),
+  Room.createChat({ name: 'Games' }),
+  Room.createChat({ name: 'Movies' }),
+  Room.createChat({ name: 'Разговорчики' })].reverse();
 
 module.exports = (socket) => {
   let sendMessageToChatFromUser;
@@ -36,7 +37,7 @@ module.exports = (socket) => {
   socket.on('disconnect', () => {
     if ('user' in socket) {
       onlineUsers = removeUserFromList(onlineUsers, socket.user.name);
-      io.emit(USER_DISCONNECT, onlineUsers)
+      io.emit(USER_DISCONNECT, onlineUsers);
     }
   });
 
@@ -50,11 +51,11 @@ module.exports = (socket) => {
 
   // Отправляем комнаты по умолчанию
   socket.on(CREATE_CHATS, (callback) => {
-    callback(defaultRoom)
+    callback(defaultRoom);
   });
 
   // Отправка сообщений
-  socket.on(MESSAGE_SEND, ({chatId, message}) => {
-    sendMessageToChatFromUser(chatId, message)
-  })
+  socket.on(MESSAGE_SEND, ({ chatId, message }) => {
+    sendMessageToChatFromUser(chatId, message);
+  });
 };

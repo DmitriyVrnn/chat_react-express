@@ -1,0 +1,19 @@
+.container-login .login-form{
+    width: 20em;
+    margin: 40px;
+    border: 1px solid green;
+    padding: 130px;
+}
+
+.login-form .login-field{
+    width: 350px;
+    margin-top: 20px;
+}
+
+.login-form .login-title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'Merriweather', serif;
+    color: black;
+}

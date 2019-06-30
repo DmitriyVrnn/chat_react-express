@@ -8,3 +8,12 @@
     width: 80%;
     margin-bottom: 20px;
 }
+
+.form-input .fas{
+    position: absolute;
+    left: 9px;
+}
+
+.form-input .btn-send{
+    margin-left: 10px;
+}

@@ -5,6 +5,8 @@ import './styles.css';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
 
 export default class MessageInput extends React.Component {
   state = {
@@ -20,13 +22,15 @@ export default class MessageInput extends React.Component {
   sendMessage = () => {
     const { sendMessage } = this.props;
     const { message } = this.state;
-    sendMessage(message);
+    if (message.trim()) {
+      sendMessage(message);
+    }
   };
 
   render() {
     const { message } = this.state;
     return (
-      <div className="message-block">
+      <div className="message-input">
         <form className="form-input" onSubmit={this.handleSubmit}>
           <TextField
             className="text-field"
@@ -38,8 +42,9 @@ export default class MessageInput extends React.Component {
               this.setState({ message: target.value });
             }}
           />
-          <Button type="submit">
-              Отправить
+          <Button type="submit" variant="contained" color="primary" className="btn-send">
+            <Icon><i className="fas fa-paper-plane" /></Icon>
+            Отправить
           </Button>
         </form>
       </div>

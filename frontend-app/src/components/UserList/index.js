@@ -4,11 +4,18 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 const UserList = ({ users }) => (
-  <div className="user-list-container">
-    <h3 className="user-list-title">Онлайн</h3>
+  <div className="online-container">
+    <h3 className="user-list-title">В сети</h3>
     <ul className="user-list">
       {users.map(user => (
-        <li className="user-list-item" key={user.id}>{user.name}</li>))}
+        <li
+          className="user-list-item"
+          key={user.id}
+        >
+          <div className="circle" />
+          {user.name}
+        </li>
+      ))}
     </ul>
   </div>
 );

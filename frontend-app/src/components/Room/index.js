@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {
+  Link, BrowserRouter as Router,
+} from 'react-router-dom';
 
 import './styles.css';
 
 const Room = ({
   name, active, setActiveChat, id,
-}) => {
-  //ПОДУМАТЬ
-  console.log(id);
-  return (
+}) => (
+  <Router>
     <Link
       to={`${id}`}
-      className={active ? 'active' : ''}
+      className={active ? 'active' : 'room-name'}
       onClick={setActiveChat}
     >
-      <span>{name}</span>
+      <span>{`#${name}`}</span>
     </Link>
-  );
-};
-
-
+  </Router>
+);
 export default Room;
+
 
 Room.propTypes = {
   name: PropTypes.string.isRequired,
   active: PropTypes.bool,
   setActiveChat: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 Room.defaultProps = {
