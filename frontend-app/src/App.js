@@ -1,11 +1,9 @@
 import React from 'react';
 
-import EntranceController from './components/EntranceController'
+import EntranceController from './components/EntranceController';
 
-const App = () => {
-  return (
-      <EntranceController/>
-  );
-};
+const App = () => (
+  <EntranceController />
+);
 
 export default App;

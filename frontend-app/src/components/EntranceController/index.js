@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import socketIOClient from 'socket.io-client'
+import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
 
-import LoginForm from '../LoginForm'
-import ChatForm from '../ChatForm'
-import {USER_CONNECTED, CONNECTION_PORT, LOGOUT_USER} from '../../constants/';
+import LoginForm from '../LoginForm';
+import ChatForm from '../ChatForm';
+import { USER_CONNECTED, CONNECTION_PORT, LOGOUT_USER } from '../../constants';
 
 class EntranceController extends Component {
   state = {
@@ -13,41 +13,48 @@ class EntranceController extends Component {
 
   componentWillMount() {
     const socket = socketIOClient(CONNECTION_PORT);
-    if (this.state.user) {
-      this.reconnect(socket)
+    const { user } = this.state;
+    if (user) {
+      this.reconnect(socket);
     } else {
-      console.log("connected")
+      console.log('connected');
     }
-    this.setState({socket})
-  };
+    this.setState({ socket });
+  }
 
-  //action
   setUser = (user) => {
-    const {socket} = this.state;
+    const { socket } = this.state;
     socket.emit(USER_CONNECTED, user);
-    this.setState({user});
+    this.setState({ user });
   };
 
-  //action
   logout = () => {
-    const {socket} = this.state;
+    const { socket } = this.state;
     socket.emit(LOGOUT_USER);
-    this.setState({user: null})
+    this.setState({ user: null });
   };
 
   render() {
-    const {socket, user} = this.state;
+    const { socket, user } = this.state;
     return (
-        <section>
-          {user ?
-              <ChatForm user={user}
-                        logout={this.logout}
-                        socket={socket}/>
-              : <LoginForm socket={socket}
-                           setUser={this.setUser}/>
+      <section>
+        {user
+          ? (
+            <ChatForm
+              user={user}
+              logout={this.logout}
+              socket={socket}
+            />
+          )
+          : (
+            <LoginForm
+              socket={socket}
+              setUser={this.setUser}
+            />
+          )
           }
-        </section>
-    )
+      </section>
+    );
   }
 }
 
