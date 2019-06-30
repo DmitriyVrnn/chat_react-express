@@ -1,6 +1,6 @@
-const uuid = require('uuid')
+const uuid = require('uuid');
 
-const createMessage = ({message = "", sender = ""} = {}) => {
+const createMessage = ({ message = "", sender = "" } = {}) => {
   return {
     id: uuid(),
     time: getTime(new Date(Date.now())),

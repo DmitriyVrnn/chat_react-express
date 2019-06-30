@@ -12,7 +12,7 @@ import {
   USER_CONNECTED,
   USER_DISCONNECT,
   MESSAGE_SEND,
-  COMMUNITY_CHAT,
+  CREATE_CHATS,
   MESSAGE_RECIEVED,
 } from "../../constants";
 
@@ -32,7 +32,7 @@ export default class ChatForm extends Component {
     const {socket} = this.props;
     socket.off(USER_CONNECTED);
     socket.off(USER_DISCONNECT);
-    socket.off(COMMUNITY_CHAT);
+    socket.off(CREATE_CHATS);
   }
 
   resetChat = (chat) => {
@@ -48,7 +48,8 @@ export default class ChatForm extends Component {
         chats: newChats,
         activeChat: reset ? item : null
       });
-      const messageEvent = `${MESSAGE_RECIEVED}-${item.id}`
+      //переключение чатов
+      const messageEvent = `${MESSAGE_RECIEVED}${item.id}`;
       socket.on(messageEvent, this.addMessageToChat(item.id))
     })
   }
@@ -86,7 +87,7 @@ export default class ChatForm extends Component {
       console.log('DISCONNECT', (users))
     });
 
-    socket.emit(COMMUNITY_CHAT, this.resetChat)
+    socket.emit(CREATE_CHATS, this.resetChat)
 
     //socket.emit(COMMUNITY_CHAT, this.resetChat)
   }

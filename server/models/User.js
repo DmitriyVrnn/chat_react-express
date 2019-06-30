@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-const createUser = ({name = ""}) => {
+const createUser = ({ name = "" }) => {
   return {
     id: uuid(),
     name,

@@ -5,6 +5,5 @@ export const LOGIN = 'LOGIN';
 export const MESSAGE_SEND = 'MESSAGE_SEND';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const USER_DISCONNECT = 'USER_DISCONNECT';
-export const TYPING = 'TYPING';
-export const COMMUNITY_CHAT = 'COMMUNITY_CHAT';
+export const CREATE_CHATS = 'CREATE_CHATS';
 export const MESSAGE_RECIEVED = 'MESSAGE_RECIEVED';

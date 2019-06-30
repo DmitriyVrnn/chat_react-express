@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-const createChat = ({messages = [], name = "", users = []} = {}) => (
+const createChat = ({ messages = [], name = "", users = [] } = {}) => (
     {
       id: uuid(),
       name,

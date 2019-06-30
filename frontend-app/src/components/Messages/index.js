@@ -3,7 +3,6 @@ import React from 'react'
 export default class Messages extends React.Component {
   render() {
     const {messages} = this.props
-    console.log('ЧЕ ТУТ', messages)
     return (
         <div className="thread-container">
           <div className="thread">
