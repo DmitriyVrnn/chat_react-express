@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import './styles.css';
-
 import LoginForm from '../LoginForm';
 import ChatForm from '../ChatForm';
+
 import { USER_CONNECTED, CONNECTION_PORT, LOGOUT_USER } from '../../constants';
+
+import './styles.css';
 
 class EntranceController extends Component {
   state = {
@@ -24,7 +25,7 @@ class EntranceController extends Component {
     this.setState({ socket });
   }
 
-  setUser = (user) => {
+  setUserToChat = (user) => {
     const { socket } = this.state;
     socket.emit(USER_CONNECTED, user);
     this.setState({ user });
@@ -51,7 +52,7 @@ class EntranceController extends Component {
           : (
             <LoginForm
               socket={socket}
-              setUser={this.setUser}
+              setUserToChat={this.setUserToChat}
             />
           )
           }

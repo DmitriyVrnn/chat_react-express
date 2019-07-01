@@ -48,9 +48,9 @@ export default class ChatForm extends Component {
         chats: newChats,
         activeChat: reset ? item : null,
       });
-      //переключение чатов
       const messageEvent = `${MESSAGE_RECIEVED}${item.id}`;
       socket.on(messageEvent, this.addMessageToChat(item.id));
+      return item;
     });
   };
 
@@ -65,7 +65,7 @@ export default class ChatForm extends Component {
     this.setState({ chats: newChats });
   };
 
-  setActiveChats = (activeChat) => {
+  changeActiveChats = (activeChat) => {
     this.setState({ activeChat });
   };
 
@@ -95,7 +95,7 @@ export default class ChatForm extends Component {
           logout={logout}
           chats={chats}
           activeChats={activeChat}
-          setActiveChat={this.setActiveChats}
+          setActiveChat={this.changeActiveChats}
         />
         {
             activeChat !== null ? (

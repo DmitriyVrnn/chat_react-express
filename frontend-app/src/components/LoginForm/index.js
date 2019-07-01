@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.css';
-
 import TextField from '@material-ui/core/TextField';
-
 import { LOGIN } from '../../constants';
+
+import './styles.css';
 
 export default class LoginForm extends Component {
   state = {
     user: '',
+    error: false,
   };
 
-  setUser = ({ user, isUser }) => {
-    const { setUser } = this.props;
-    if (isUser) {
-      console.log(`err ${isUser}`);
-    } else {
-      setUser(user);
-    }
+  getError = (error) => {
+    this.setState({
+      error,
+    });
   };
 
   handleInputChange = (e) => {
     this.setState({ user: e.target.value });
+  };
+
+  setUser = ({ user, isUser }) => {
+    const { setUserToChat } = this.props;
+    if (isUser) {
+      this.getError('Данный логин занят');
+    } else {
+      setUserToChat(user);
+    }
   };
 
   handleSubmit = (e) => {
@@ -35,28 +41,30 @@ export default class LoginForm extends Component {
   };
 
   render() {
-    const { user } = this.state;
+    const { user, error } = this.state;
     return (
-      <>
-        <form className="login-form" onSubmit={this.handleSubmit}>
-          <label>
-            <p className="login-title">Логин</p>
-            <TextField
-              className="login-field"
-              placeholder="Введите логин"
-              type="text"
-              value={user}
-              onChange={this.handleInputChange}
-              required
-            />
-          </label>
-        </form>
-      </>
+      <form
+        className="login-form"
+        onSubmit={this.handleSubmit}
+      >
+        <label>
+          <p className="login-title">Логин</p>
+          <TextField
+            className="login-field"
+            placeholder="Введите логин"
+            type="text"
+            value={user}
+            onChange={this.handleInputChange}
+            required
+          />
+          <p className="error-message">{error || null}</p>
+        </label>
+      </form>
     );
   }
 }
 
 LoginForm.propTypes = {
-  setUser: PropTypes.func.isRequired,
+  setUserToChat: PropTypes.func.isRequired,
   socket: PropTypes.objectOf(PropTypes.any).isRequired,
 };

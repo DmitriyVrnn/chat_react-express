@@ -5,7 +5,7 @@ import './styles.css';
 
 const UserList = ({ users }) => (
   <div className="online-container">
-    <h3 className="user-list-title">В сети</h3>
+    <h3 className="user-list-title">В сети ({`${Object.keys(users).length}`})</h3>
     <ul className="user-list">
       {users.map(user => (
         <li
