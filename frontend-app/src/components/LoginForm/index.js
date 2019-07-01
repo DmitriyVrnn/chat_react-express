@@ -35,9 +35,11 @@ export default class LoginForm extends Component {
     const { socket } = this.props;
     const { user } = this.state;
     e.preventDefault();
-    if (user.trim()) {
-      socket.emit(LOGIN, user, this.setUser);
-    }
+    if (user.length < 16) {
+      if (user.trim()) {
+        socket.emit(LOGIN, user, this.setUser);
+      }
+    } else this.getError('Длина логина должна быть не более 15 символов');
   };
 
   render() {

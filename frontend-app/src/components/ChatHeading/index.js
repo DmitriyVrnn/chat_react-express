@@ -6,7 +6,7 @@ import './styles.css';
 const ChatHeading = ({ name }) => (
   <div className="header">
     <h1 className="title-room">
-        Комната
+          Комната
       {` #${name}`}
     </h1>
   </div>

@@ -37,6 +37,17 @@ export default class ChatForm extends Component {
     socket.off(CREATE_CHATS);
   }
 
+  initializeSocket = (socket) => {
+    socket.on(USER_CONNECTED, (users) => {
+      const arrayUsers = createArrayFromObject(users);
+      this.setState({ users: arrayUsers });
+    });
+    socket.on(USER_DISCONNECT, (users) => {
+      this.setState({ users: createArrayFromObject(users) });
+    });
+    socket.emit(CREATE_CHATS, this.resetChat);
+  };
+
   resetChat = chat => this.addChat(chat, true);
 
   addChat = (chat, reset) => {
@@ -72,17 +83,6 @@ export default class ChatForm extends Component {
   sendMessage = (chatId, message) => {
     const { socket } = this.props;
     socket.emit(MESSAGE_SEND, { chatId, message });
-  };
-
-  initializeSocket = (socket) => {
-    socket.on(USER_CONNECTED, (users) => {
-      const listUsers = createArrayFromObject(users);
-      this.setState({ users: listUsers });
-    });
-    socket.on(USER_DISCONNECT, (users) => {
-      this.setState({ users: createArrayFromObject(users) });
-    });
-    socket.emit(CREATE_CHATS, this.resetChat);
   };
 
   render() {
