@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import RoomContainer from '../RoomContainer';
+import RoomList from '../RoomList';
 import UserList from '../UserList';
-import ChatHeading from '../ChatHeading';
+import MessageHeading from '../MessageHeading';
 import Messages from '../Messages';
 import MessageInput from '../MessageInput';
 import { createArrayFromObject } from '../../utils';
@@ -18,7 +18,7 @@ import {
   MESSAGE_RECIEVED,
 } from '../../constants';
 
-export default class ChatForm extends Component {
+class ChatContainer extends Component {
   state = {
     users: [],
     chats: [],
@@ -67,19 +67,20 @@ export default class ChatForm extends Component {
 
   addMessageToChat = chatId => (message) => {
     const { chats } = this.state;
-    const newChats = chats.map(chat => Object.values(chat).map((chat) => {
+    const changeChat = chats.map(chat => Object.values(chat).map((chat) => {
       if (chat.id === chatId) {
         chat.messages.push(message);
       }
       return chat;
     }));
-    this.setState({ chats: newChats });
+    this.setState({ chats: changeChat });
   };
 
   changeActiveChats = (activeChat) => {
     this.setState({ activeChat });
   };
 
+  // Добавляем сообщение в указанный чат
   sendMessage = (chatId, message) => {
     const { socket } = this.props;
     socket.emit(MESSAGE_SEND, { chatId, message });
@@ -90,7 +91,7 @@ export default class ChatForm extends Component {
     const { users, chats, activeChat } = this.state;
     return (
       <div className="chat-container">
-        <RoomContainer
+        <RoomList
           user={user}
           logout={logout}
           chats={chats}
@@ -100,7 +101,7 @@ export default class ChatForm extends Component {
         {
             activeChat !== null ? (
               <div className="message-container">
-                <ChatHeading name={activeChat.name} />
+                <MessageHeading name={activeChat.name} />
                 <Messages
                   messages={activeChat.messages}
                   user={user}
@@ -123,7 +124,9 @@ export default class ChatForm extends Component {
   }
 }
 
-ChatForm.propTypes = {
+export default ChatContainer;
+
+ChatContainer.propTypes = {
   socket: PropTypes.objectOf(PropTypes.any).isRequired,
   user: PropTypes.shape({
     id: PropTypes.string,

@@ -12,7 +12,7 @@ const Room = ({
   <Router>
     <Link
       to={`${id}`}
-      className={active ? 'active' : 'room-name'}
+      className={active ? 'active-room' : 'room-name'}
       onClick={setActiveChat}
     >
       <span>{`#${name}`}</span>

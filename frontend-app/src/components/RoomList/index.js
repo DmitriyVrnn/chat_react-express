@@ -6,7 +6,7 @@ import Room from '../Room';
 
 import './styles.css';
 
-const RoomContainer = ({
+const RoomList = ({
   chats, activeChats, user, setActiveChat, logout,
 }) => (
   <div className="room-container">
@@ -51,9 +51,9 @@ const RoomContainer = ({
   </div>
 );
 
-export default RoomContainer;
+export default RoomList;
 
-RoomContainer.propTypes = {
+RoomList.propTypes = {
   chats: PropTypes.arrayOf(PropTypes.any).isRequired,
   activeChats: PropTypes.objectOf(PropTypes.any),
   user: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -61,6 +61,6 @@ RoomContainer.propTypes = {
   logout: PropTypes.func.isRequired,
 };
 
-RoomContainer.defaultProps = {
+RoomList.defaultProps = {
   activeChats: null,
 };

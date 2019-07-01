@@ -41,7 +41,6 @@ module.exports = (socket) => {
     }
   });
 
-  // Выход
   socket.on(LOGOUT_USER, () => {
     if ('user' in socket) {
       onlineUsers = removeUserFromList(onlineUsers, socket.user.name);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './styles.css';
 
-const ChatHeading = ({ name }) => (
+const MessageHeading = ({ name }) => (
   <div className="header">
     <h1 className="title-room">
           Комната
@@ -11,12 +11,12 @@ const ChatHeading = ({ name }) => (
     </h1>
   </div>
 );
-export default ChatHeading;
+export default MessageHeading;
 
-ChatHeading.defaultProps = {
+MessageHeading.defaultProps = {
   name: '',
 };
 
-ChatHeading.propTypes = {
+MessageHeading.propTypes = {
   name: PropTypes.string,
 };
