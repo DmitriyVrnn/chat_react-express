@@ -1,29 +1,72 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import TextField from '@material-ui/core/TextField';
+import { LOGIN } from '../../constants';
+
+import './styles.css';
 
 export default class LoginForm extends Component {
   state = {
-    login: '',
+    user: '',
+    error: false,
+  };
+
+  getError = (error) => {
+    this.setState({
+      error,
+    });
   };
 
   handleInputChange = (e) => {
-    this.setState({login: e.target.value})
+    this.setState({ user: e.target.value });
   };
 
-  handleSubmit = (e, { socket }) => {
+  setUser = ({ user, isUser }) => {
+    const { setUserToChat } = this.props;
+    if (isUser) {
+      this.getError('Данный логин занят');
+    } else {
+      setUserToChat(user);
+    }
+  };
+
+  handleSubmit = (e) => {
+    const { socket } = this.props;
+    const { user } = this.state;
     e.preventDefault();
-    socket.emit()
+    if (user.length < 16) {
+      if (user.trim()) {
+        socket.emit(LOGIN, user, this.setUser);
+      }
+    } else this.getError('Длина логина должна быть не более 15 символов');
   };
 
   render() {
-    const {login} = this.state;
+    const { user, error } = this.state;
     return (
-        <>
-          <form action="">
-            <label> Input your nickname
-              <input type="text" value={login} onChange={this.handleInputChange} required/>
-            </label>
-          </form>
-        </>
-    )
+      <form
+        className="login-form"
+        onSubmit={this.handleSubmit}
+      >
+        <label>
+          <p className="login-title">Логин</p>
+          <TextField
+            className="login-field"
+            placeholder="Введите логин"
+            type="text"
+            value={user}
+            onChange={this.handleInputChange}
+            required
+          />
+          <p className="error-message">{error || null}</p>
+        </label>
+      </form>
+    );
   }
+}
+
+LoginForm.propTypes = {
+  setUserToChat: PropTypes.func.isRequired,
+  socket: PropTypes.objectOf(PropTypes.any).isRequired,
 };

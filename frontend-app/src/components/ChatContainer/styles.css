@@ -1,0 +1,15 @@
+.chat-container {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.message-container{
+    position: relative;
+    width: 76%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}

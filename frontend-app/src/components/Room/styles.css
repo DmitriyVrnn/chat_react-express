@@ -1,0 +1,8 @@
+.room-name{
+    color: black;
+}
+
+.active-room {
+    color: #1b5e20;
+    background-color: #e0e0e0;
+}
