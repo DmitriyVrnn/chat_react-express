@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import RoomList from '../RoomList';
+import SideBar from '../SideBar';
 import UserList from '../UserList';
 import MessageHeading from '../MessageHeading';
 import Messages from '../Messages';
@@ -91,7 +91,7 @@ class ChatContainer extends Component {
     const { users, chats, activeChat } = this.state;
     return (
       <div className="chat-container">
-        <RoomList
+        <SideBar
           user={user}
           logout={logout}
           chats={chats}
