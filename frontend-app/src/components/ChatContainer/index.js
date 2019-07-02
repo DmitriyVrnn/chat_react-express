@@ -45,10 +45,10 @@ class ChatContainer extends Component {
     socket.on(USER_DISCONNECT, (users) => {
       this.setState({ users: createArrayFromObject(users) });
     });
-    socket.emit(CREATE_CHATS, this.resetChat);
+    socket.emit(CREATE_CHATS, this.setChat);
   };
 
-  resetChat = chat => this.addChat(chat, true);
+  setChat = chat => this.addChat(chat, true);
 
   addChat = (chat, reset) => {
     const { socket } = this.props;
