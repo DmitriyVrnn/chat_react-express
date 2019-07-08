@@ -1,11 +1,12 @@
-
 .form-input {
     margin: 20px auto;
-    width: 80%;
+    width: 86%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .text-field {
-    width: 80%;
+    width: 87%;
     margin-bottom: 20px;
 }
 

@@ -45,10 +45,11 @@
     color: black;
     height: 100%;
     padding: 10px 15px;
+    max-width: 50em;
     position: relative;
 }
 
-.message-container .message::before {
+.message-wrapper .message::before {
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-right-color: #e0e0e0;
@@ -63,6 +64,40 @@
     width: 0
 }
 
+.message-wrapper.right-message {
+    text-align: left;
+    justify-content: flex-end
+}
+
+.message-wrapper.right-message .time {
+    order: 2;
+    margin-left: 25px
+}
+
+.message-wrapper.right-message .data {
+    margin-left: 0;
+    order: 1
+}
+
+.message-wrapper.right-message .name {
+    display: none
+}
+
+.message-wrapper.right-message .message {
+    background: #8fb4fc;
+    color: #fff;
+    border-top-right-radius: 0;
+    border-top-left-radius: 5px;
+    max-width: 50em;
+}
+
+.message-wrapper.right-message .message::before {
+    border-top-color: #8fb4fc;
+    border-left-color: #8fb4fc;
+    border-right-color: transparent;
+    left: auto;
+    right: -7px
+}
 
 
 

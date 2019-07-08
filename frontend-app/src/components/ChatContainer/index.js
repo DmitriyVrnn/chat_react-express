@@ -118,7 +118,8 @@ class ChatContainer extends Component {
                 </div>
               )
           }
-        <UserList users={users} />
+        <UserList users={users}
+                  userName={user}/>
       </div>
     );
   }

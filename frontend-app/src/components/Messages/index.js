@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './styles.css';
 
-const Messages = ({ messages }) => {
+const Messages = ({ messages, user }) => {
   const messagesEndRef = useRef(null);
   useEffect(() => {
     messagesEndRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
@@ -15,7 +15,7 @@ const Messages = ({ messages }) => {
           {
               messages.map(mes => (
                 <div
-                  className="message-wrapper"
+                  className={`message-wrapper ${mes.sender === user.name && 'right-message'}`}
                   key={mes.id}
                 >
                   <div className="time">{mes.time}</div>
@@ -37,4 +37,5 @@ export default Messages;
 
 Messages.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
 };
