@@ -8,8 +8,9 @@ import './styles.css';
 const RoomList = ({
   chats, activeChats, setActiveChat,
 }) => (
-  <ul className="list-rooms">
-    {
+  <>
+    <ul className="list-rooms">
+      {
           chats.map((chat) => {
             if (activeChats) {
               return Object.values(chat).map(item => (
@@ -30,7 +31,8 @@ const RoomList = ({
             return (<h1>Активные комнаты отсутствуют</h1>);
           })
         }
-  </ul>
+    </ul>
+  </>
 );
 
 export default RoomList;

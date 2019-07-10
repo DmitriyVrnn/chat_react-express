@@ -9,28 +9,36 @@ import './styles.css';
 const SideBar = ({
   chats, activeChats, user, setActiveChat, logout,
 }) => (
-  <div className="sidebar">
-    <RoomList
-      chats={chats}
-      activeChats={activeChats}
-      setActiveChat={setActiveChat}
-    />
-    <div className="current-user">
-      <span className="block-info user-name-info">{user.name}</span>
-      <Button
-        variant="outlined"
-        color="inherit"
-        type="button"
-        onClick={() => {
-          logout();
-        }}
-        title="Logout"
-        className="block-info btn-logout"
-      >
-        Выход
-      </Button>
+  <>
+    <input type="checkbox" id="hmt" className="hidden-menu-ticker" />
+    <label className="btn-menu" htmlFor="hmt">
+      <span className="first" />
+      <span className="second" />
+      <span className="third" />
+    </label>
+    <div className="sidebar">
+      <RoomList
+        chats={chats}
+        activeChats={activeChats}
+        setActiveChat={setActiveChat}
+      />
+      <div className="current-user">
+        <span className="block-info user-name-info">{user.name}</span>
+        <Button
+          variant="outlined"
+          color="inherit"
+          type="button"
+          onClick={() => {
+            logout();
+          }}
+          title="Logout"
+          className="block-info btn-logout"
+        >
+            Выход
+        </Button>
+      </div>
     </div>
-  </div>
+  </>
 );
 
 export default SideBar;

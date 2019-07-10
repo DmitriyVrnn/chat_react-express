@@ -13,3 +13,9 @@
     justify-content: space-between;
     flex-direction: column;
 }
+
+@media screen and (max-width: 1000px) {
+    .message-container{
+        width: 100%;
+    }
+}

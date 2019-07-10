@@ -4,22 +4,28 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 const UserList = ({ users, userName }) => (
-  <div className="online-container">
-    <h3 className="user-list-title">В сети (
-      {`${Object.keys(users).length}`})
-    </h3>
-    <ul className="user-list">
-      {users.map(user => (
-        <li
-          className="user-list-item"
-          key={user.id}
-        >
-          <div className="circle" />
-          {`${user.name} ${user.name === userName.name ? '(Вы)' : ''}`}
-        </li>
-      ))}
-    </ul>
-  </div>
+  <>
+    <input type="checkbox" id="online-user" className="hidden-online-user" />
+    <label className="btn-online" htmlFor="online-user"><i className="fas fa-chevron-down"></i></label>
+    <div className="online-container">
+      <h3 className="user-list-title">
+В сети (
+        {`${Object.keys(users).length}`}
+)
+      </h3>
+      <ul className="user-list">
+        {users.map(user => (
+          <li
+            className="user-list-item"
+            key={user.id}
+          >
+            <div className="circle" />
+            {`${user.name} ${user.name === userName.name ? '(Вы)' : ''}`}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </>
 );
 
 export default UserList;

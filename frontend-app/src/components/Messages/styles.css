@@ -99,6 +99,29 @@
     right: -7px
 }
 
+@media screen and (max-width: 1600px) {
+    .message-wrapper {
+        margin: 0 80px 14px 58px;
+    }
+    .message-wrapper .message, .message-wrapper.right-message .message{
+        max-width: 34em;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .message-wrapper {
+        margin: 0px 28px 14px 28px;
+    }
+    .message-wrapper .message{
+        max-width: 20em;
+    }
+
+    .message-wrapper.right-message .message{
+        max-width: 25em;
+    }
+}
+
+
 
 
 
