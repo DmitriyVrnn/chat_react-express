@@ -55,6 +55,23 @@
     margin-top: 6px;
 }
 
+.current-user {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.current-user > .block-info {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.current-user .user-name-info {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* media */
 @media screen and (max-width: 1370px) {
     .btn-menu {
         display: block;
@@ -101,20 +118,4 @@
         position: absolute;
         bottom: 0;
     }
-}
-
-.current-user {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 25px;
-}
-
-.current-user > .block-info {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.current-user .user-name-info {
-    margin-bottom: 10px;
-    font-size: 18px;
 }

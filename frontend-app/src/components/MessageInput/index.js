@@ -42,7 +42,7 @@ export default class MessageInput extends React.Component {
           />
           <Button type="submit" variant="contained" color="primary" className="btn-send">
             <Icon><i className="fas fa-paper-plane" /></Icon>
-            Отправить
+            <span className="send-title">Отправить</span>
           </Button>
         </form>
       </div>

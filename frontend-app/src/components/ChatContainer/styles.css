@@ -14,6 +14,7 @@
     flex-direction: column;
 }
 
+/* media */
 @media screen and (max-width: 1000px) {
     .message-container{
         width: 100%;

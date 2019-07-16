@@ -46,6 +46,7 @@
     height: 100%;
     padding: 10px 15px;
     max-width: 50em;
+    word-wrap: break-word;
     position: relative;
 }
 
@@ -99,6 +100,8 @@
     right: -7px
 }
 
+
+/* media */
 @media screen and (max-width: 1600px) {
     .message-wrapper {
         margin: 0 80px 14px 58px;
@@ -115,12 +118,38 @@
     .message-wrapper .message{
         max-width: 20em;
     }
-
     .message-wrapper.right-message .message{
         max-width: 25em;
     }
 }
 
+@media screen and (max-width: 600px) {
+    .message-wrapper .message{
+        max-width: 15em;
+    }
+    .message-wrapper.right-message .message{
+        max-width: 15em;
+    }
+}
+
+
+@media screen and (max-width: 450px){
+    .thread-container{
+        height: 80vh;
+    }
+
+    .message-wrapper{
+        margin: 0px 14px 14px 7px;
+    }
+    .message-wrapper .message{
+        max-width: 14em;
+        font-size: 0.8rem;
+    }
+    .message-wrapper.right-message .message{
+        max-width: 14em;
+        font-size: 0.8rem;
+    }
+}
 
 
 

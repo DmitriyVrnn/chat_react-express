@@ -30,6 +30,7 @@
     cursor: pointer;
 }
 
+/* media */
 @media screen and (max-width: 1370px) {
     .items a {
         font-size: 1.1rem;

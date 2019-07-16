@@ -41,6 +41,8 @@
     backface-visibility: hidden;
 }
 
+
+/* media */
 @media screen and (max-width: 1000px) {
     .btn-online {
         display: block;

@@ -18,3 +18,31 @@
 .form-input .btn-send{
     margin-left: 10px;
 }
+
+@media screen and (max-width: 1000px) {
+    .form-input .btn-send .send-title{
+        display: none;
+    }
+
+    .form-input .btn-send {
+        margin-left: 20px;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        transform: scale(0.8);
+    }
+    .form-input .fas{
+        left: 18px;
+        transform: rotate(30deg);
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .form-input{
+        min-width: 5em;
+    }
+
+    .form-input .btn-send {
+        margin-right: -18px;
+    }
+}

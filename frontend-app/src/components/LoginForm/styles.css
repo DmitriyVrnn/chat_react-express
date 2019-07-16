@@ -22,3 +22,45 @@
     color: red;
     text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+    .container-login .login-form{
+        width: 15em;
+    }
+
+    .login-form .login-field{
+        width: 15em;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .container-login .login-form{
+        width: 14em;
+        padding: 100px;
+    }
+
+    .login-form .login-field{
+        width: 16em;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .container-login .login-form{
+        width: 8em;
+        padding: 100px;
+    }
+
+    .login-form .login-field{
+        width: 10em;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .container-login .login-form{
+        padding: 80px;
+    }
+}
+
+
+
+
